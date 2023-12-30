@@ -1,0 +1,105 @@
+.display-cards {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-sort-container {
+  display: flex;
+  gap: 10px;
+}
+
+.search-filter-sort {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.select-box {
+  margin-left: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.card {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  margin: 10px;
+  perspective: 1000px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+.card.flip {
+  transform: rotateY(180deg);
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  backface-visibility: hidden;
+}
+
+.question,
+.answer {
+  backface-visibility: hidden;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.update-status {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.editing {
+  background-color: #f9f9f9;
+}
+
+input {
+  margin-bottom: 5px;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}

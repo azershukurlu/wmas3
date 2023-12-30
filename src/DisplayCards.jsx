@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FlashcardApp from "./FlashcardApp";
 import { updateMethod } from "./FlashcardApp";
+import "./style/DisplayCards.css";
 
 const DisplayCards = ({ flashCards, onDelete, setFcd }) => {
   const [searchInfo, setSearchInfo] = useState("");
@@ -47,10 +48,12 @@ const DisplayCards = ({ flashCards, onDelete, setFcd }) => {
           placeholder="Search cards"
           value={searchInfo}
           onChange={(event) => setSearchInfo(event.target.value)}
+          className="search-filter-sort"
         />
         <select
           value={filterInfo}
           onChange={(event) => setFilterInfo(event.target.value)}
+          className="select-box"
         >
           <option value="Full">Full</option>
           <option value="Want to Learn">Want to Learn</option>
@@ -60,6 +63,7 @@ const DisplayCards = ({ flashCards, onDelete, setFcd }) => {
         <select
           value={sortInfo}
           onChange={(event) => setSortInfo(event.target.value)}
+          className="select-box"
         >
           <option value="id">ID</option>
           <option value="question">Front</option>
