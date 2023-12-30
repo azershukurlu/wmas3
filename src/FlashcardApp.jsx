@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 
+import "./style/FlashcardApp.css";
+
 const currentDate = new Date().toLocaleDateString("en-US", {
   year: "numeric",
   month: "2-digit",

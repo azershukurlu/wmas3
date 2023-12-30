@@ -21,7 +21,7 @@ const DisplayCards = ({ flashCards, onDelete, setFcd }) => {
     .filter((card) => {
       const cardStatus = card.status ? card.status : "unknown";
       return (
-        filterInfo === "All" ||
+        filterInfo === "Full" ||
         (cardStatus && cardStatus.toLowerCase() === filterInfo.toLowerCase())
       );
     })
@@ -66,8 +66,8 @@ const DisplayCards = ({ flashCards, onDelete, setFcd }) => {
           className="select-box"
         >
           <option value="id">ID</option>
-          <option value="question">Front</option>
-          <option value="answer">Back</option>
+          <option value="question">Question</option>
+          <option value="answer">Answer</option>
           <option value="modificationDate">Modification Date</option>
         </select>
       </div>
@@ -90,6 +90,7 @@ const DisplayCards = ({ flashCards, onDelete, setFcd }) => {
               )
             }
             setFcd={setFcd}
+            className="display-card"
           />
         ))}
       </div>
