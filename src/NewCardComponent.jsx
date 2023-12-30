@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./style/NewCardComponent.css";
 
 const NewCardComponent = ({ onCreateCardAction, onCancelAction }) => {
   const [question, setQuestion] = useState("");

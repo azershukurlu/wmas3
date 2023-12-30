@@ -2,11 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 
 import "./style/FlashcardApp.css";
 
-const currentDate = new Date().toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-});
+const currentDate = new Date().toISOString().split("T")[0];
 
 const updateMethod = async (
   id,
@@ -66,6 +62,7 @@ const FlashcardApp = ({
   flashcards,
   setFlashcards,
   selectedCard,
+  setSelectedCard,
 }) => {
   const questionElement = useRef();
   const answerElement = useRef();
@@ -177,6 +174,14 @@ const FlashcardApp = ({
     setEditedAnswer(event.target.value);
   }
 
+  const checkboxHandler = (id) => {
+    setSelectedCard((prev) =>
+      prev.includes(id)
+        ? prev.filter((selected) => selected !== id)
+        : [...prev, id]
+    );
+  };
+
   return (
     <div
       key={flashCard.id}
@@ -204,6 +209,19 @@ const FlashcardApp = ({
         </>
       ) : (
         <>
+          {!flip && (
+            <div
+              className="check-box"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <input
+                type="checkbox"
+                checked={selectedCard.includes(flashCard.id)}
+                onChange={() => {}}
+                onClick={() => checkboxHandler(flashCard.id)}
+              />
+            </div>
+          )}
           <div className="question" ref={questionElement}>
             {editedQuestion}
           </div>

@@ -27,3 +27,19 @@
   border-radius: 4px;
   margin-right: 10px;
 }
+
+.create-card-btn {
+  background-color: #3498db;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+}
+
+.create-card-btn:hover {
+  background-color: #2980b9;
+}
