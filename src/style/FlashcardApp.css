@@ -1,76 +1,133 @@
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  justify-content: space-around;
-}
-
 .card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 10px;
-  cursor: pointer;
-  transition: transform 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 65px;
   position: relative;
-  perspective: 1000px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: #f8f8f8;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0))
+    translateY(var(--translate-y, 0));
+
+  transition: all 0.5s ease;
+  cursor: pointer;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  --translate-y: -5px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
 .card.flip {
-  transform: rotateY(180deg);
-}
-
-.card.editing {
-  height: auto;
-}
-
-.card input {
-  margin-bottom: 10px;
-  padding: 5px;
-  width: 100%;
-}
-
-.card button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
-  margin-top: 10px;
-}
-
-.card button:hover {
-  background-color: #0056b3;
+  --rotate-x: 180deg;
 }
 
 .card .question,
 .card .answer {
-  height: 100%;
-  overflow: hidden;
+  position: absolute;
+  padding: 1.5rem;
+  backface-visibility: hidden;
+}
+
+.card .question {
+  left: 0;
+  font-size: 18px;
+  color: #333;
 }
 
 .card .answer {
-  display: none;
+  position: relative;
+  transform: rotateX(180deg);
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}
+
+.update-status {
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-status:hover {
+  background-color: #219653;
+}
+
+.actions {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
   backface-visibility: hidden;
-  transform: rotateY(180deg);
 }
 
-.card.flip .question {
-  display: none;
+.actions button {
+  padding: 8px 15px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.card.flip .answer {
-  display: block;
+.actions button:hover {
+  background-color: #2980b9;
+}
+
+.card.editing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card.editing input {
+  margin-top: 15px;
+  padding: 10px;
+  width: 80%;
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+.card.editing button {
+  margin-top: 10px;
+  padding: 12px;
+  background-color: #e67e22;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card.editing button:hover {
+  background-color: #d35400;
+}
+
+.status-location {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 8px;
+  font-size: 12px;
+  border-radius: 6px;
+  transform-style: preserve-3d;
+  color: #555;
+}
+
+.status-location.rotated {
+  transform: rotateX(180deg);
 }

@@ -133,6 +133,702 @@
       "modificationDate": "2023-12-30",
       "status": "Want to Learn",
       "order": 15
+    },
+    {
+      "id": 16,
+      "question": "Who played the role of the Joker in 'The Dark Knight'?",
+      "answer": "Heath Ledger",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 16
+    },
+    {
+      "id": 17,
+      "question": "What is the name of the dog in 'Friends' that Ross claims he got after his wife left him?",
+      "answer": "Chi-Chi",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 17
+    },
+    {
+      "id": 18,
+      "question": "Who portrayed Sherlock Holmes in the BBC series 'Sherlock'?",
+      "answer": "Benedict Cumberbatch",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 18
+    },
+    {
+      "id": 19,
+      "question": "Which animated film is known as the 'Circle of Life'?",
+      "answer": "The Lion King",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 19
+    },
+    {
+      "id": 20,
+      "question": "Who is the uncle who owns the One Ring in 'The Lord of the Rings'?",
+      "answer": "Bilbo Baggins",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 20
+    },
+    {
+      "id": 21,
+      "question": "Who played Hermione Granger in the 'Harry Potter' film series?",
+      "answer": "Emma Watson",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 21
+    },
+    {
+      "id": 22,
+      "question": "What is the name of the fictional African country in 'Black Panther'?",
+      "answer": "Wakanda",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 22
+    },
+    {
+      "id": 23,
+      "question": "What is Sheldon Cooper's catchphrase in 'The Big Bang Theory'?",
+      "answer": "Bazinga!",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 23
+    },
+    {
+      "id": 24,
+      "question": "Who directed the science fiction film 'Interstellar'?",
+      "answer": "Christopher Nolan",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 24
+    },
+    {
+      "id": 25,
+      "question": "Which TV series follows the lives of the Bluth family?",
+      "answer": "Arrested Development",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 25
+    },
+    {
+      "id": 26,
+      "question": "What is the name of the artificial intelligence system in the 'Iron Man' films?",
+      "answer": "J.A.R.V.I.S.",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 26
+    },
+    {
+      "id": 27,
+      "question": "Who played Katniss Everdeen in 'The Hunger Games'?",
+      "answer": "Jennifer Lawrence",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 27
+    },
+    {
+      "id": 28,
+      "question": "In 'Stranger Things,' what is Eleven's real name?",
+      "answer": "Jane Ives",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 28
+    },
+    {
+      "id": 29,
+      "question": "Who directed the movie 'The Dark Knight Rises'?",
+      "answer": "Christopher Nolan",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 29
+    },
+    {
+      "id": 30,
+      "question": "What is the name of Chandler's roommate before Joey in 'Friends'?",
+      "answer": "Kip",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 30
+    },
+    {
+      "id": 31,
+      "question": "Who portrayed John Watson in the BBC series 'Sherlock'?",
+      "answer": "Martin Freeman",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 31
+    },
+    {
+      "id": 32,
+      "question": "Which Disney film features a character named Simba?",
+      "answer": "The Lion King",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 32
+    },
+    {
+      "id": 33,
+      "question": "Who is Frodo's best friend and companion in 'The Lord of the Rings'?",
+      "answer": "Samwise Gamgee",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 33
+    },
+    {
+      "id": 34,
+      "question": "Who played the role of Ron Weasley in the 'Harry Potter' film series?",
+      "answer": "Rupert Grint",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 34
+    },
+    {
+      "id": 35,
+      "question": "What metal is vibranium in 'Black Panther' made of?",
+      "answer": "Vibranium",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 35
+    },
+    {
+      "id": 36,
+      "question": "In 'The Big Bang Theory,' what is Howard Wolowitz's profession?",
+      "answer": "Aerospace engineer",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 36
+    },
+    {
+      "id": 37,
+      "question": "What is the wormhole in 'Interstellar' used for?",
+      "answer": "Interstellar travel",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 37
+    },
+    {
+      "id": 38,
+      "question": "Who played Peeta Mellark in 'The Hunger Games'?",
+      "answer": "Josh Hutcherson",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 38
+    },
+    {
+      "id": 39,
+      "question": "In 'Stranger Things,' who is the chief of police in Hawkins?",
+      "answer": "Jim Hopper",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 39
+    },
+    {
+      "id": 40,
+      "question": "Which actor portrayed Batman in 'The Dark Knight' trilogy?",
+      "answer": "Christian Bale",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 40
+    },
+    {
+      "id": 41,
+      "question": "What instrument does Ross play in 'Friends'?",
+      "answer": "Keyboard",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 41
+    },
+    {
+      "id": 42,
+      "question": "Who played Irene Adler in the BBC series 'Sherlock'?",
+      "answer": "Lara Pulver",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 42
+    },
+    {
+      "id": 43,
+      "question": "Which character says 'Hakuna Matata' in 'The Lion King'?",
+      "answer": "Timon and Pumbaa",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 43
+    },
+    {
+      "id": 44,
+      "question": "What is the name of Legolas' father in 'The Lord of the Rings'?",
+      "answer": "Thranduil",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 44
+    },
+    {
+      "id": 45,
+      "question": "Who played Bellatrix Lestrange in the 'Harry Potter' film series?",
+      "answer": "Helena Bonham Carter",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 45
+    },
+    {
+      "id": 46,
+      "question": "What is the name of T'Challa's sister in 'Black Panther'?",
+      "answer": "Shuri",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 46
+    },
+    {
+      "id": 47,
+      "question": "In 'The Big Bang Theory,' what is Rajesh Koothrappali's inability?",
+      "answer": "Selective mutism",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 47
+    },
+    {
+      "id": 48,
+      "question": "What is the primary mission of the spaceship 'Endurance' in 'Interstellar'?",
+      "answer": "Find a habitable planet for humanity",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 48
+    },
+    {
+      "id": 49,
+      "question": "Who directed the movie 'Catching Fire,' the second installment in 'The Hunger Games' series?",
+      "answer": "Francis Lawrence",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 49
+    },
+    {
+      "id": 50,
+      "question": "In 'Stranger Things,' what is the name of Will Byers' older brother?",
+      "answer": "Jonathan Byers",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 50
+    },
+    {
+      "id": 51,
+      "question": "Who composed the music for 'The Dark Knight' trilogy?",
+      "answer": "Hans Zimmer",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 51
+    },
+    {
+      "id": 52,
+      "question": "What is the name of Joey's agent in 'Friends'?",
+      "answer": "Estelle Leonard",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 52
+    },
+    {
+      "id": 53,
+      "question": "Who is the archenemy of Sherlock Holmes in the original stories?",
+      "answer": "Professor Moriarty",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 53
+    },
+    {
+      "id": 54,
+      "question": "Which animated film features a character named Mufasa?",
+      "answer": "The Lion King",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 54
+    },
+    {
+      "id": 55,
+      "question": "Who is the leader of the Fellowship of the Ring in 'The Lord of the Rings'?",
+      "answer": "Aragorn",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 55
+    },
+    {
+      "id": 56,
+      "question": "What is the name of the ghost in 'Harry Potter' who is the house-elf's friend?",
+      "answer": "Nearly Headless Nick",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 56
+    },
+    {
+      "id": 57,
+      "question": "In 'Black Panther,' what is the special herb that grants enhanced abilities to the Black Panther?",
+      "answer": "Heart-Shaped Herb",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 57
+    },
+    {
+      "id": 58,
+      "question": "What song is a recurring theme in 'The Big Bang Theory'?",
+      "answer": "Soft Kitty",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 58
+    },
+    {
+      "id": 59,
+      "question": "What is the name of Matthew McConaughey's character in 'Interstellar'?",
+      "answer": "Joseph Cooper",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 59
+    },
+    {
+      "id": 60,
+      "question": "Who is the president of the Capitol in 'The Hunger Games'?",
+      "answer": "President Coriolanus Snow",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 60
+    },
+    {
+      "id": 61,
+      "question": "In 'Stranger Things,' what is the name of the parallel dimension?",
+      "answer": "The Upside Down",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 61
+    },
+    {
+      "id": 62,
+      "question": "Who directed 'The Dark Knight Rises'?",
+      "answer": "Christopher Nolan",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 62
+    },
+    {
+      "id": 63,
+      "question": "What is the name of the coffee shop where the friends frequently gather in 'Friends'?",
+      "answer": "Central Perk",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 63
+    },
+    {
+      "id": 64,
+      "question": "Who played the role of Irene Adler in the BBC series 'Sherlock'?",
+      "answer": "Lara Pulver",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 64
+    },
+    {
+      "id": 65,
+      "question": "What is the name of Simba's father in 'The Lion King'?",
+      "answer": "Mufasa",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 65
+    },
+    {
+      "id": 66,
+      "question": "Who is the wizard who gives the Fellowship of the Ring guidance in 'The Lord of the Rings'?",
+      "answer": "Gandalf",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 66
+    },
+    {
+      "id": 67,
+      "question": "What is the name of the house-elf in 'Harry Potter' who is loyal to the Malfoy family?",
+      "answer": "Dobby",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 67
+    },
+    {
+      "id": 68,
+      "question": "In 'Black Panther,' what is T'Challa's superhero alter ego?",
+      "answer": "Black Panther",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 68
+    },
+    {
+      "id": 69,
+      "question": "Who is the aerospace engineer friend of Howard Wolowitz in 'The Big Bang Theory'?",
+      "answer": "Howard's Mom",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 69
+    },
+    {
+      "id": 70,
+      "question": "What is the main objective of the space mission in 'Interstellar'?",
+      "answer": "Find a new habitable planet for humanity",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 70
+    },
+    {
+      "id": 71,
+      "question": "Who portrayed President Alma Coin in 'The Hunger Games'?",
+      "answer": "Julianne Moore",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 71
+    },
+    {
+      "id": 72,
+      "question": "In 'Stranger Things,' who is Will Byers' best friend?",
+      "answer": "Mike Wheeler",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 72
+    },
+    {
+      "id": 73,
+      "question": "Who composed the music for 'The Dark Knight Rises'?",
+      "answer": "Hans Zimmer",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 73
+    },
+    {
+      "id": 74,
+      "question": "What is the name of the actor who plays Joey Tribbiani in 'Friends'?",
+      "answer": "Matt LeBlanc",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 74
+    },
+    {
+      "id": 75,
+      "question": "Who is Sherlock Holmes' trusted friend and companion in the original stories?",
+      "answer": "Dr. John Watson",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 75
+    },
+    {
+      "id": 76,
+      "question": "Which character sings 'Can You Feel the Love Tonight' in 'The Lion King'?",
+      "answer": "Timon and Pumbaa",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 76
+    },
+    {
+      "id": 77,
+      "question": "Who is the ranger and skilled archer in 'The Lord of the Rings'?",
+      "answer": "Legolas",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 77
+    },
+    {
+      "id": 78,
+      "question": "In 'Harry Potter,' who is the head of Slytherin House?",
+      "answer": "Severus Snape",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 78
+    },
+    {
+      "id": 79,
+      "question": "What is the traditional Wakandan greeting in 'Black Panther'?",
+      "answer": "Wakanda Forever",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 79
+    },
+    {
+      "id": 80,
+      "question": "In 'The Big Bang Theory,' what is Sheldon's favorite spot on the couch?",
+      "answer": "His Spot",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 80
+    },
+    {
+      "id": 81,
+      "question": "What is the name of the spaceship's AI in 'Interstellar'?",
+      "answer": "TARS",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 81
+    },
+    {
+      "id": 82,
+      "question": "Who played Gale Hawthorne in 'The Hunger Games'?",
+      "answer": "Liam Hemsworth",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 82
+    },
+    {
+      "id": 83,
+      "question": "In 'Stranger Things,' what is Eleven's favorite food?",
+      "answer": "Eggo Waffles",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 83
+    },
+    {
+      "id": 84,
+      "question": "Who directed the science fiction film 'Inception'?",
+      "answer": "Christopher Nolan",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 84
+    },
+    {
+      "id": 85,
+      "question": "What is the name of the coffee shop across the street from Central Perk in 'Friends'?",
+      "answer": "Central Park",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 85
+    },
+    {
+      "id": 86,
+      "question": "Who played the role of Mycroft Holmes in the BBC series 'Sherlock'?",
+      "answer": "Mark Gatiss",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 86
+    },
+    {
+      "id": 87,
+      "question": "What phrase means 'no worries' in 'The Lion King'?",
+      "answer": "Hakuna Matata",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 87
+    },
+    {
+      "id": 88,
+      "question": "Who is the main antagonist in 'The Lord of the Rings'?",
+      "answer": "Sauron",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 88
+    },
+    {
+      "id": 89,
+      "question": "What magical object helps Harry Potter breathe underwater in the Triwizard Tournament?",
+      "answer": "Gillyweed",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 89
+    },
+    {
+      "id": 90,
+      "question": "In 'Black Panther,' who is the leader of the Jabari tribe?",
+      "answer": "M'Baku",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 90
+    },
+    {
+      "id": 91,
+      "question": "What is Rajesh Koothrappali's special ability in 'The Big Bang Theory'?",
+      "answer": "Selective mutism",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 91
+    },
+    {
+      "id": 92,
+      "question": "What is the mysterious force in 'Interstellar' that allows communication beyond space and time?",
+      "answer": "Love",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 92
+    },
+    {
+      "id": 93,
+      "question": "Who played Effie Trinket in 'The Hunger Games'?",
+      "answer": "Elizabeth Banks",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 93
+    },
+    {
+      "id": 94,
+      "question": "In 'Stranger Things,' what is the name of the government laboratory conducting experiments?",
+      "answer": "Hawkins National Laboratory",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 94
+    },
+    {
+      "id": 95,
+      "question": "Who played the role of Dom Cobb in the movie 'Inception'?",
+      "answer": "Leonardo DiCaprio",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 95
+    },
+    {
+      "id": 96,
+      "question": "What is the surname of Monica and Ross in 'Friends'?",
+      "answer": "Geller",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 96
+    },
+    {
+      "id": 97,
+      "question": "Who co-created and wrote the 'Sherlock' series along with Mark Gatiss?",
+      "answer": "Steven Moffat",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 97
+    },
+    {
+      "id": 98,
+      "question": "What is the name of Simba's mother in 'The Lion King'?",
+      "answer": "Sarabi",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 98
+    },
+    {
+      "id": 99,
+      "question": "Who is the author of 'The Lord of the Rings' trilogy?",
+      "answer": "J.R.R. Tolkien",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 99
+    },
+    {
+      "id": 100,
+      "question": "What is the name of the house-elf in 'Harry Potter' who is loyal to Harry Potter?",
+      "answer": "Dobby",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 100
+    },
+    {
+      "id": 101,
+      "question": "Which actor portrayed the character Hannibal Lecter in 'The Silence of the Lambs'?",
+      "answer": "Anthony Hopkins",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 101
+    },
+    {
+      "id": 102,
+      "question": "In 'The Walking Dead,' what is the name of the main protagonist?",
+      "answer": "Rick Grimes",
+      "modificationDate": "2023-12-30",
+      "status": "Want to Learn",
+      "order": 102
     }
   ]
 }

@@ -208,12 +208,11 @@ const FlashcardApp = ({
             {editedQuestion}
           </div>
           <div className="answer" ref={answerElement}>
-            <div className={`answer ${flip ? "rotated" : ""}`}>
-              {editedAnswer}
-            </div>
+            <div className={flip ? "rotated" : ""}></div>
+            {editedAnswer}
             {flip && status !== "Learned" && (
               <button className="update-status" onClick={statusHandler}>
-                Update Status
+                Change Status
               </button>
             )}
           </div>
