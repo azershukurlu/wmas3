@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 const currentDate = new Date().toLocaleDateString("en-US", {
   year: "numeric",
@@ -37,19 +37,17 @@ const updateMethod = async (
       }),
     });
 
-    const orderFixed = updatedCard
-      .filter((card) => card.id !== id)
-      .map((card) =>
-        fetch(`http://localhost:3000/cardData/${card.id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            order: card.order,
-          }),
-        })
-      );
+    const orderFixed = updatedCard.map((card) =>
+      fetch(`http://localhost:3000/cardData/${card.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          order: card.order,
+        }),
+      })
+    );
 
     await Promise.all(orderFixed);
 
@@ -58,8 +56,6 @@ const updateMethod = async (
     console.error("Encountered error while updating card:", error);
   }
 };
-
-export { updateMethod };
 
 const FlashcardApp = ({
   flashCard,
@@ -112,33 +108,25 @@ const FlashcardApp = ({
     }
   };
 
-  const updateSelectedCard = (question, answer) => {
+  const updateSelectedCard = async (question, answer) => {
     const updatedCards = flashcards.map((card) =>
       selectedCard.includes(card.id)
         ? { ...card, question, answer, modificationDate: currentDate }
         : card
     );
 
-    fetch("http://localhost:3000/cardData", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedCards),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.error("Updating selected cards failed...");
-          throw new Error("Updating selected cards failed...");
-        }
-        return response.json();
-      })
-      .then((updatedCards) => {
-        setFlashcards(updatedCards);
-      })
-      .catch((error) => {
-        console.error("Error occurred while updating selected cards:", error);
+    try {
+      await fetch(`${process.env.PUBLIC_URL}/database/server.json`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cardData: updatedCards }),
       });
+      setFlashcards(updatedCards);
+    } catch (error) {
+      console.error("Error occurred while updating selected cards:", error);
+    }
   };
 
   const statusHandler = (event) => {
@@ -241,5 +229,7 @@ const FlashcardApp = ({
     </div>
   );
 };
+
+export { updateMethod };
 
 export default FlashcardApp;

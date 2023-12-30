@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import DisplayCards from "./DisplayCards";
 
 const FlashCardContainer = () => {
   const [flashCards, setFlashCards] = useState([]);
@@ -18,12 +19,19 @@ const FlashCardContainer = () => {
       .catch((error) => {
         console.error("Error occurred while deleting the card:", error);
       });
+
+    fetchCards(setFlashCards);
   };
 
-  function fetchCards() {
+  useEffect(() => {
+    fetchCards(setFlashCards);
+  }, []);
+
+  function fetchCards(setFlashCards) {
     fetch(`${process.env.PUBLIC_URL}/database/server.json`)
       .then((response) => response.json())
       .then((data) => {
+        console.log("Fetched data:", data);
         const flashCardsData = data.cardData || [];
         const updatedCards = flashCardsData.map((card) => ({
           id: card.id,
@@ -40,11 +48,15 @@ const FlashCardContainer = () => {
       });
   }
 
-  useEffect(() => {
-    fetchCards();
-  }, []);
-
-  return <div className="container"></div>;
+  return (
+    <div className="container">
+      <DisplayCards
+        flashCards={flashCards}
+        onDelete={deleteHandler}
+        setFcd={setFlashCards}
+      />
+    </div>
+  );
 };
 
 export default FlashCardContainer;
