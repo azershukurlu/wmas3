@@ -1,12 +1,17 @@
 {
-  "messages": [{}],
-  "cardData": [
+  "messages": [
     {
-      "id": 1,
-      "question": "q1",
-      "answer": "a1",
-      "modificationDate": "12/29/2023",
-      "order": 1
+      "subject": "Mail test.",
+      "email": "ashukurlu12315@ada.edu.az",
+      "content": "My first attempt!",
+      "id": 1
+    },
+    {
+      "subject": "Random Title!",
+      "email": "randomemail@gmail.com",
+      "content": "Random message!",
+      "id": 2
     }
-  ]
+  ],
+  "cardData": []
 }
