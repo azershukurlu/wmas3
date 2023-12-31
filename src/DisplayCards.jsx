@@ -74,7 +74,7 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
       const nextPage = pageRef.current + 1;
       await new Promise((resolve) => setTimeout(resolve, 675));
       const data = await fetchCards(`_page=${nextPage}&_limit=12`);
-      const updatedData = updateDataWithOrder(data);
+      const updatedData = updateDataWithOrder(data, flashCards);
 
       setLocalFlashCards((prevFlashCards) => [
         ...prevFlashCards,
@@ -88,13 +88,16 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
     }
   }, [flashCards]);
 
-  const updateDataWithOrder = (data) => {
+  const updateDataWithOrder = (data, prevFlashCards) => {
+    const maxOrder =
+      prevFlashCards.length > 0
+        ? prevFlashCards[prevFlashCards.length - 1].order
+        : 0;
     return data.map((card, index) => ({
       ...card,
-      order: flashCards.length + index + 1,
+      order: maxOrder + index + 1,
     }));
   };
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -284,7 +287,7 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
 
       {isAddCardFormVisible && renderAddCardForm()}
 
-      {renderFlashcards()}
+      {renderFlashcards(fetchFlashCards)}
 
       <h1 className="loading-text">
         {loading && !isFetchingMore && <div>Loading...</div>}

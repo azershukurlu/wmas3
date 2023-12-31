@@ -50,6 +50,7 @@ const FlashcardApp = ({
   setFlashCards,
   selectedCards,
   setSelectedCards,
+  fetchFlashCards,
 }) => {
   const questionElement = useRef();
   const answerElement = useRef();
@@ -92,7 +93,7 @@ const FlashcardApp = ({
       flashCard.id,
       editedQuestion,
       editedAnswer,
-      flashCard.order,
+      flashCards.findIndex((card) => card.id === flashCard.id) + 1,
       flashCards,
       setFlashCards
     );
@@ -218,7 +219,9 @@ const FlashcardApp = ({
         return flashcard;
       });
 
-      const updateOrder = updatedCards.map((flash) =>
+      setFlashCards(updatedCards);
+
+      const updateOrderPromises = updatedCards.map((flash) =>
         fetch(`http://localhost:3000/cardData/${flash.id}`, {
           method: "PATCH",
           headers: {
@@ -230,20 +233,20 @@ const FlashcardApp = ({
         })
       );
 
-      Promise.all(updateOrder)
+      Promise.all(updateOrderPromises)
         .then(() => {
-          const unique = [
-            ...new Map(updatedCards.map((card) => [card.id, card])).values(),
-          ];
-          setFlashCards(unique);
+          fetchFlashCards();
         })
         .catch((error) => {
-          console.error("Error occurred while updating the card:", error);
+          console.error("Error updating order:", error);
         });
     } else {
-      console.error("Dragged card or target is invalid:", draggedID, target);
+      console.error(
+        "Invalid draggedCard or targetFlashCard:",
+        draggedID,
+        target
+      );
     }
-
     event.target.style.background = "white";
   };
 
