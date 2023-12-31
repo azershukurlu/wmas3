@@ -1,18 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
+
 import "./style/FlashcardApp.css";
 
 const currentDate = new Date().toISOString().split("T")[0];
-
 const updateMethod = async (
   id,
   question,
   answer,
   order,
-  flashcards,
-  setFlashcards
+  flashCards,
+  setFlashCards
 ) => {
   try {
-    const updatedCard = flashcards.map((card) => {
+    const updatedCard = flashCards.map((card) => {
       if (card.id === id) {
         return {
           ...card,
@@ -30,25 +30,13 @@ const updateMethod = async (
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        question,
+        answer,
         order,
       }),
     });
 
-    const orderFixed = updatedCard.map((card) =>
-      fetch(`http://localhost:3000/cardData/${card.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          order: card.order,
-        }),
-      })
-    );
-
-    await Promise.all(orderFixed);
-
-    setFlashcards(updatedCard);
+    setFlashCards(updatedCard);
   } catch (error) {
     console.error("Encountered error while updating card:", error);
   }
@@ -58,10 +46,10 @@ const FlashcardApp = ({
   flashCard,
   onDelete,
   onUpdate,
-  flashcards,
-  setFlashcards,
-  selectedCard,
-  setSelectedCard,
+  flashCards,
+  setFlashCards,
+  selectedCards,
+  setSelectedCards,
 }) => {
   const questionElement = useRef();
   const answerElement = useRef();
@@ -100,31 +88,46 @@ const FlashcardApp = ({
     event.stopPropagation();
     setCurrMode(false);
     setFlip(!flip);
-    onUpdate(editedQuestion, editedAnswer);
-    if (selectedCard.includes(flashCard.id)) {
-      updateSelectedCard(editedQuestion, editedAnswer);
+    updateMethod(
+      flashCard.id,
+      editedQuestion,
+      editedAnswer,
+      flashCard.order,
+      flashCards,
+      setFlashCards
+    );
+    if (selectedCards.includes(flashCard.id)) {
+      updateSelectedCards(editedQuestion, editedAnswer);
     }
   };
 
-  const updateSelectedCard = async (question, answer) => {
-    const updatedCards = flashcards.map((card) =>
-      selectedCard.includes(card.id)
+  const updateSelectedCards = (question, answer) => {
+    const updatedCards = flashCards.map((card) =>
+      selectedCards.includes(card.id)
         ? { ...card, question, answer, modificationDate: currentDate }
         : card
     );
 
-    try {
-      await fetch(`${process.env.PUBLIC_URL}/database/server.json`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ cardData: updatedCards }),
+    fetch("http://localhost:3000/cardData", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedCards),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.error("Updating selected cards failed...");
+          throw new Error("Updating selected cards failed...");
+        }
+        return response.json();
+      })
+      .then((updatedCards) => {
+        setFlashCards(updatedCards);
+      })
+      .catch((error) => {
+        console.error("Error occurred while updating selected cards:", error);
       });
-      setFlashcards(updatedCards);
-    } catch (error) {
-      console.error("Error occurred while updating selected cards:", error);
-    }
   };
 
   const statusHandler = (event) => {
@@ -148,7 +151,7 @@ const FlashcardApp = ({
         return response.json();
       })
       .then((updatedCard) => {
-        setFlashcards((prev) =>
+        setFlashCards((prev) =>
           prev.map((prevCard) =>
             prevCard.id === updatedCard.id ? updatedCard : prevCard
           )
@@ -174,11 +177,74 @@ const FlashcardApp = ({
   }
 
   const checkboxHandler = (id) => {
-    setSelectedCard((prev) =>
+    setSelectedCards((prev) =>
       prev.includes(id)
         ? prev.filter((selected) => selected !== id)
         : [...prev, id]
     );
+  };
+
+  function dragHandler(event, flashCard) {
+    event.dataTransfer.setData(
+      "text/plain",
+      JSON.stringify({ id: flashCard.id, order: flashCard.order })
+    );
+  }
+
+  function dragHandlerEnd(event) {
+    event.target.style.background = "white";
+  }
+
+  function dragHandlerOver(event) {
+    event.preventDefault();
+    event.target.style.background = "lightgray";
+  }
+
+  const dropHandler = (event, target) => {
+    event.preventDefault();
+
+    const draggedCard = JSON.parse(event.dataTransfer.getData("text/plain"));
+    const draggedID = draggedCard.id;
+    const draggedOrder = draggedCard.order;
+
+    if (draggedID && target) {
+      const updatedCards = flashCards.map((flashcard) => {
+        if (flashcard.id === target.id) {
+          return { ...flashcard, order: draggedOrder };
+        }
+        if (flashcard.id === draggedID) {
+          return { ...flashcard, order: target.order };
+        }
+        return flashcard;
+      });
+
+      const updateOrder = updatedCards.map((flash) =>
+        fetch(`http://localhost:3000/cardData/${flash.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            order: flash.order,
+          }),
+        })
+      );
+
+      Promise.all(updateOrder)
+        .then(() => {
+          const unique = [
+            ...new Map(updatedCards.map((card) => [card.id, card])).values(),
+          ];
+          setFlashCards(unique);
+        })
+        .catch((error) => {
+          console.error("Error occurred while updating the card:", error);
+        });
+    } else {
+      console.error("Dragged card or target is invalid:", draggedID, target);
+    }
+
+    event.target.style.background = "white";
   };
 
   return (
@@ -189,6 +255,22 @@ const FlashcardApp = ({
       onClick={clickEvent}
       onMouseEnter={mouseEventEnter}
       onMouseLeave={mouseEventLeave}
+      onDragStart={(event) => {
+        dragHandler(event, flashCard);
+      }}
+      onDragLeave={(event) => {
+        dragHandlerEnd(event);
+      }}
+      onDragEnd={(event) => {
+        dragHandlerOver(event);
+      }}
+      onDragOver={(event) => {
+        dragHandlerOver(event);
+      }}
+      onDrop={(event) => {
+        dropHandler(event, flashCard);
+      }}
+      draggable={true}
     >
       {currMode ? (
         <>
@@ -204,7 +286,7 @@ const FlashcardApp = ({
             onChange={changeHandlerAnswer}
             onClick={(event) => event.stopPropagation()}
           />
-          <button onClick={updateEvent}>Update</button>
+          <button onClick={(event) => updateEvent(event)}>Update</button>
         </>
       ) : (
         <>
@@ -215,7 +297,7 @@ const FlashcardApp = ({
             >
               <input
                 type="checkbox"
-                checked={selectedCard.includes(flashCard.id)}
+                checked={selectedCards.includes(flashCard.id)}
                 onChange={() => {}}
                 onClick={() => checkboxHandler(flashCard.id)}
               />

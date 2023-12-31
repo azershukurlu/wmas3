@@ -53,7 +53,7 @@ const FlashCardContainer = () => {
       <DisplayCards
         flashCards={flashCards}
         onDelete={deleteHandler}
-        setFcd={setFlashCards}
+        setFlashCards={setFlashCards}
       />
     </div>
   );
