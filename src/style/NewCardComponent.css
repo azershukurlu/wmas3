@@ -1,3 +1,7 @@
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .create-card-interface {
   max-width: 400px;
   margin: 0 auto;

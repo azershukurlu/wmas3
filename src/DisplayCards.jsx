@@ -1,8 +1,151 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import FlashcardApp from "./FlashcardApp";
 import { updateMethod } from "./FlashcardApp";
 import NewCardComponent from "./NewCardComponent";
+
 import "./style/DisplayCards.css";
+
+const SearchFilterSort = ({
+  searchInfo,
+  setSearchInfo,
+  filterInfo,
+  setFilterInfo,
+  sortInfo,
+  setSortInfo,
+  selectedCard,
+  setAddCardVisibility,
+  shareHandler,
+}) => {
+  return (
+    <div className="display-cards">
+      <input
+        type="text"
+        placeholder="Search cards"
+        value={searchInfo}
+        onChange={(event) => setSearchInfo(event.target.value)}
+        className="search-filter-sort"
+      />
+      <select
+        value={filterInfo}
+        onChange={(event) => setFilterInfo(event.target.value)}
+        className="select-box"
+      >
+        <option value="Full">Full</option>
+        <option value="Want to Learn">Want to Learn</option>
+        <option value="Noted">Noted</option>
+        <option value="Learned">Learned</option>
+      </select>
+      <select
+        value={sortInfo}
+        onChange={(event) => setSortInfo(event.target.value)}
+        className="select-box"
+      >
+        <option value="id">ID</option>
+        <option value="question">Question</option>
+        <option value="answer">Answer</option>
+        <option value="modificationDate">Modification Date</option>
+      </select>
+      <button
+        className={`btn create-card-btn ${
+          selectedCard.length > 0 ? "selected-card" : ""
+        }`}
+        onClick={() => setAddCardVisibility(true)}
+      >
+        Create Card
+      </button>
+      <button
+        className="btn share-card-btn"
+        onClick={shareHandler}
+        style={{
+          visibility: selectedCard.length > 0 ? "visible" : "hidden",
+        }}
+      >
+        Share Card
+      </button>
+    </div>
+  );
+};
+
+const CreateCardForm = ({
+  addCardVisibility,
+  setAddCardVisibility,
+  createCardHandler,
+}) => {
+  return (
+    addCardVisibility && (
+      <div className="create-card-form">
+        <NewCardComponent
+          onCreateCardAction={createCardHandler}
+          onCancelAction={() => setAddCardVisibility(false)}
+        />
+      </div>
+    )
+  );
+};
+
+const DisplayCardList = ({
+  sortedCards,
+  onDelete,
+  setFcd,
+  selectedCard,
+  checkboxChangeHandler,
+  setSelectedCard,
+}) => {
+  return (
+    <div className="display-cards">
+      {sortedCards.map((card) => (
+        <DisplayCard
+          key={card.id}
+          flashCard={card}
+          onDelete={onDelete}
+          onUpdate={(id, question, answer, flashCards, order) =>
+            updateMethod(id, question, answer, order, flashCards, setFcd)
+          }
+          selectedCard={selectedCard}
+          setSelectedCard={setSelectedCard}
+          onCheckboxChange={checkboxChangeHandler}
+          setFcd={setFcd}
+        />
+      ))}
+    </div>
+  );
+};
+
+const DisplayCard = ({
+  flashCard,
+  onDelete,
+  onUpdate,
+  selectedCard,
+  setSelectedCard,
+  onCheckboxChange,
+  setFcd,
+  flashCards,
+}) => {
+  return (
+    <FlashcardApp
+      key={flashCard.id}
+      flashCard={flashCard}
+      flashCards={flashCards}
+      onDelete={onDelete}
+      onUpdate={(id, question, answer, flashCards, order) =>
+        updateMethod(id, question, answer, order, flashCards, setFcd)
+      }
+      selectedCard={selectedCard}
+      setSelectedCard={setSelectedCard}
+      onCheckboxChange={onCheckboxChange}
+      setFcd={setFcd}
+      className="display-card"
+    />
+  );
+};
+
+const LoadingText = ({ loading, fetchMore }) => {
+  return (
+    <h1 className="loading-text">
+      {loading && !fetchMore && <p>Loading...</p>}
+    </h1>
+  );
+};
 
 const DisplayCards = ({ onDelete, setfcd: setFcd }) => {
   const [searchInfo, setSearchInfo] = useState("");
@@ -12,6 +155,9 @@ const DisplayCards = ({ onDelete, setfcd: setFcd }) => {
   const [sortInfo, setSortInfo] = useState("modificationDate");
   const [addCardVisibility, setAddCardVisibility] = useState(false);
   const currentDate = new Date().toISOString().split("T")[0];
+  const pageElement = useRef(1);
+  const [fetchMore, setFetchMore] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const sortedCards = flashCards
     .filter((card) => {
@@ -106,80 +252,106 @@ const DisplayCards = ({ onDelete, setfcd: setFcd }) => {
     )}&body=${encodeURIComponent(emailBody)}`;
   };
 
+  useEffect(() => {
+    fetchCards();
+  }, []);
+
+  const fetchCards = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `http://localhost:3000/cardData?_sort=order&_order=asc&_page=1&_limit=15`
+      );
+      const currentData = await response.json();
+      const lastDataFetch = await fetch(
+        `http://localhost:3000/cardData?_page=1&_limit=1&_sort=modificationDate&_order=desc`
+      );
+      const lastData = await lastDataFetch.json();
+      const mergedCards =
+        lastData.length > 0
+          ? [
+              ...currentData,
+              ...lastData.filter(
+                (card) =>
+                  !currentData.some((cardExist) => cardExist.id === card.id)
+              ),
+            ]
+          : currentData;
+      setFlashCards(mergedCards);
+    } catch (error) {
+      console.error("Error occurred while fetching the cards:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const scrollEventHandler = () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    const scrollHeight = document.documentElement.scrollHeight;
+
+    if (scrollTop + windowHeight >= scrollHeight - 50 && !loading) {
+      fetchMoreCards();
+    }
+  };
+
+  const fetchMoreCards = useCallback(async () => {
+    setLoading(true);
+    try {
+      const nextPage = pageElement.current + 1;
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch(
+        `http://localhost:3000/cardData?_page=${nextPage}&_limit=15`
+      );
+      const data = await response.json();
+      const updatedData = data.map((card, id) => ({
+        ...card,
+        order: flashCards.length + id + 1,
+      }));
+
+      setFlashCards((prevCards) => [...prevCards, ...updatedData]);
+      pageElement.current = nextPage;
+    } catch (error) {
+      console.error("Error occurred while fetching more flash cards:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [flashCards]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", scrollEventHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollEventHandler);
+    };
+  }, [scrollEventHandler]);
+
   return (
     <div>
-      <div className="display-cards">
-        <input
-          type="text"
-          placeholder="Search cards"
-          value={searchInfo}
-          onChange={(event) => setSearchInfo(event.target.value)}
-          className="search-filter-sort"
-        />
-        <select
-          value={filterInfo}
-          onChange={(event) => setFilterInfo(event.target.value)}
-          className="select-box"
-        >
-          <option value="Full">Full</option>
-          <option value="Want to Learn">Want to Learn</option>
-          <option value="Noted">Noted</option>
-          <option value="Learned">Learned</option>
-        </select>
-        <select
-          value={sortInfo}
-          onChange={(event) => setSortInfo(event.target.value)}
-          className="select-box"
-        >
-          <option value="id">ID</option>
-          <option value="question">Question</option>
-          <option value="answer">Answer</option>
-          <option value="modificationDate">Modification Date</option>
-        </select>
-        <button
-          className={`btn create-card-btn ${
-            selectedCard.length > 0 ? "selected-card" : ""
-          }`}
-          onClick={() => setAddCardVisibility(true)}
-        >
-          Create Card
-        </button>
-        <button
-          className="btn share-card-btn"
-          onClick={shareHandler}
-          style={{
-            visibility: selectedCard.length > 0 ? "visible" : "hidden",
-          }}
-        >
-          Share Card
-        </button>
-      </div>
-      {addCardVisibility && (
-        <div className="create-card-form">
-          <NewCardComponent
-            onCreateCardAction={createCardHandler}
-            onCancelAction={() => setAddCardVisibility(false)}
-          />
-        </div>
-      )}
-      <div className="display-cards">
-        {sortedCards.map((card) => (
-          <FlashcardApp
-            key={card.id}
-            flashCard={card}
-            flashCards={flashCards}
-            onDelete={onDelete}
-            onUpdate={(id, question, answer, flashCards, order) =>
-              updateMethod(id, question, answer, order, flashCards, setFcd)
-            }
-            selectedCard={selectedCard}
-            setSelectedCard={setSelectedCard}
-            onCheckboxChange={checkboxChangeHandler}
-            setFcd={setFcd}
-            className="display-card"
-          />
-        ))}
-      </div>
+      <SearchFilterSort
+        searchInfo={searchInfo}
+        setSearchInfo={setSearchInfo}
+        filterInfo={filterInfo}
+        setFilterInfo={setFilterInfo}
+        sortInfo={sortInfo}
+        setSortInfo={setSortInfo}
+        selectedCard={selectedCard}
+        setAddCardVisibility={setAddCardVisibility}
+        shareHandler={shareHandler}
+      />
+      <CreateCardForm
+        addCardVisibility={addCardVisibility}
+        setAddCardVisibility={setAddCardVisibility}
+        createCardHandler={createCardHandler}
+      />
+      <DisplayCardList
+        sortedCards={sortedCards}
+        onDelete={onDelete}
+        setFcd={setFcd}
+        selectedCard={selectedCard}
+        setSelectedCard={setSelectedCard}
+        checkboxChangeHandler={checkboxChangeHandler}
+      />
+      <LoadingText loading={loading} fetchMore={fetchMore} />
     </div>
   );
 };

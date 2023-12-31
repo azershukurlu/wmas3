@@ -1,3 +1,7 @@
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .display-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -28,7 +32,8 @@
   margin-right: 10px;
 }
 
-.create-card-btn {
+.create-card-btn,
+.share-card-btn {
   background-color: #3498db;
   color: #fff;
   padding: 12px 20px;
@@ -40,6 +45,11 @@
   transition: background-color 0.3s;
 }
 
-.create-card-btn:hover {
+.create-card-btn:hover,
+.share-card-btn:hover {
   background-color: #2980b9;
+}
+
+.loading-text {
+  text-align: center;
 }

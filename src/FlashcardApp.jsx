@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-
 import "./style/FlashcardApp.css";
 
 const currentDate = new Date().toISOString().split("T")[0];
