@@ -14,18 +14,23 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
   const [fetchMore, setFetchMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const today = new Date().toISOString().split("T")[0];
+  const [allowDrag, setAllowDrag] = useState(false);
 
   const pageRef = useRef(1);
 
   useEffect(() => {
-    fetchFlashCards();
-  }, []);
+    if (sortInfo === "order") {
+      fetchBasedOnOrder();
+    } else {
+      fetchFlashCards();
+    }
+  }, [sortInfo]);
 
   const fetchFlashCards = async () => {
     setLoading(true);
     try {
       const existingData = await fetchCards(
-        "_sort=order&_order=asc&_page=1&_limit=12"
+        `_sort=${sortInfo}&_order=asc&_page=1&_limit=12`
       );
       const lastAddedData = await fetchCards(
         "_page=1&_limit=1&_sort=modificationDate&_order=desc"
@@ -70,27 +75,53 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
   };
 
   const fetchMoreCards = useCallback(async () => {
+    if (sortInfo !== "order") {
+      setLoading(true);
+      try {
+        const nextPage = pageRef.current + 1;
+        await new Promise((resolve) => setTimeout(resolve, 675));
+        const data = await fetchCards(`_page=${nextPage}&_limit=12`);
+        const updatedData = data.map((card, idx) => ({
+          ...card,
+          order: flashCards.length + idx + 1,
+        }));
+
+        setLocalFlashCards((prevFlashCards) => [
+          ...prevFlashCards,
+          ...updatedData,
+        ]);
+        pageRef.current = nextPage;
+      } catch (error) {
+        console.error("Error occurred while fetching more flash cards:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  }, [flashCards, sortInfo]);
+
+  const fetchBasedOnOrder = async () => {
     setLoading(true);
     try {
-      const nextPage = pageRef.current + 1;
-      await new Promise((resolve) => setTimeout(resolve, 675));
-      const data = await fetchCards(`_page=${nextPage}&_limit=12`);
-      const updatedData = data.map((card, idx) => ({
-        ...card,
-        order: flashCards.length + idx + 1,
-      }));
-
-      setLocalFlashCards((prevFlashCards) => [
-        ...prevFlashCards,
-        ...updatedData,
-      ]);
-      pageRef.current = nextPage;
+      const response = await fetch(
+        `http://localhost:3000/cardData?_sort=order&_order=asc`
+      );
+      const data = await response.json();
+      setLocalFlashCards(data);
     } catch (error) {
-      console.error("Error occurred while fetching more flash cards:", error);
+      console.error(
+        "Error occurred while fetching sorted flash cards based on order:",
+        error
+      );
     } finally {
       setLoading(false);
     }
-  }, [flashCards]);
+  };
+
+  const sortHandler = (event) => {
+    const sortMethod = event.target.value;
+    setSortInfo(sortMethod);
+    setAllowDrag(sortMethod === "order");
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -196,6 +227,7 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
             setSelectedCards={setSelectedCards}
             onCheckboxChange={handleCheckboxChange}
             setFlashCards={setFlashCards}
+            allowDrag={allowDrag}
             className="display-card"
           />
         ))}
@@ -227,6 +259,8 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
         return a.question.localeCompare(b.question);
       } else if (sortInfo === "answer") {
         return a.answer.localeCompare(b.answer);
+      } else if (sortInfo === "order") {
+        return a.order - b.order;
       } else if (sortInfo === "Modification Date") {
         return new Date(b.modificationDate) - new Date(a.modificationDate);
       }
@@ -261,6 +295,7 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
           <option value="id">ID</option>
           <option value="question">Question</option>
           <option value="answer">Answer</option>
+          <option value="order">Order</option>
           <option value="modificationDate">Modification Date</option>
         </select>
         <button
