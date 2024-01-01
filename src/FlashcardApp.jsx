@@ -38,9 +38,25 @@ const updateMethod = async (
       }),
     });
 
+    const promiseOrder = updatedCard
+      .filter((card) => card.id !== id)
+      .map((card) => {
+        return fetch(`http://localhost:3000/cardData/${card.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            order: card.order,
+          }),
+        });
+      });
+
+    await Promise.all(promiseOrder);
+
     setFlashCards(updatedCard);
   } catch (error) {
-    console.error("Encountered error while updating card:", error);
+    console.error("Error occurred while updating the card:", error);
   }
 };
 const FlashcardApp = ({
@@ -209,49 +225,56 @@ const FlashcardApp = ({
     const draggedOrder = draggedCard.order;
 
     if (draggedID && target) {
-      const updatedCards = flashCards.map((flashcard) => {
-        if (flashcard.id === target.id) {
-          return {
-            ...flashcard,
-            order: draggedOrder,
-            modificationDate: currentDate,
-          };
+      const draggedUpdated = {
+        ...flashCards.find((card) => card.id === draggedID),
+        order: target.order,
+        modificationDate: currentDate,
+      };
+
+      const targetUpdated = {
+        ...flashCards.find((card) => card.id === target.id),
+        order: draggedOrder,
+        modificationDate: currentDate,
+      };
+
+      const updatedCards = flashCards.map((card) => {
+        if (card.id === target.id) {
+          return draggedUpdated;
         }
-        if (flashcard.id === draggedID) {
-          return {
-            ...flashcard,
-            order: target.order,
-            modificationDate: currentDate,
-          };
+        if (card.id === draggedID) {
+          return targetUpdated;
         }
-        return flashcard;
+        return card;
       });
 
       setFlashCards(updatedCards);
 
-      const updateOrderPromises = updatedCards.map((flash) =>
-        fetch(`http://localhost:3000/cardData/${flash.id}`, {
+      const promiseOrder = updatedCards.map((card) =>
+        fetch(`http://localhost:3000/cardData/${card.id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            order: flash.order,
-            modificationDate: flash.modificationDate,
+            order: card.order,
+            modificationDate: card.modificationDate,
           }),
         })
       );
 
-      Promise.all(updateOrderPromises)
+      Promise.all(promiseOrder)
         .then(() => {
-          fetchFlashCards();
+          const uniqueCard = [
+            ...new Map(updatedCards.map((card) => [card.id, card])).values(),
+          ];
+          setFlashCards(uniqueCard);
         })
         .catch((error) => {
-          console.error("Error updating order:", error);
+          console.error("Error occurred while updating the order:", error);
         });
     } else {
       console.error(
-        "Invalid draggedCard or targetFlashCard:",
+        "The dragged card or target card is invalid:",
         draggedID,
         target
       );

@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# Flashcard React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a React-based flashcard application with a JSON-Server backend.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+### Prerequisites
 
-### `npm start`
+Make sure you have Node.js and npm installed on your machine.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js: [Download and Install Node.js](https://nodejs.org/)
+- npm: [Install npm](https://www.npmjs.com/get-npm)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Installation
 
-### `npm test`
+1. Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   ```bash
+   git clone https://github.com/azershukurlu/wmas3.git
+   ```
 
-### `npm run build`
+2. Navigate to the project directory:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- cd wmas3
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Install dependencies for the React app:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- npm install
+- npm install -g json-server
+- npm install react-router-dom@latest
 
-### `npm run eject`
+4. Start JSON-Server:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- install json-server
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. In a new terminal window, start the React app:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- npm start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Usage
 
-## Learn More
+- In home page, you can see information about me and my projects; you are welcome to click on view project feature to view my projects.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- The flashcards are fetched from the JSON-Server, and you can use the application to create, edit, and delete flashcards.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- You can re-order the flashcards by dragging any desirable card and dropping it to any other card.
 
-### Code Splitting
+- You can sort the cards based on their IDs, question, answer, and modification date (this is default sort).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- You can search any card's question or answer through the search-box and find the desired card easily. However, as the cards are fetched 12 by 12 because of infinite scrolling, you have to scroll down so that you can have more access to other cards.
 
-### Analyzing the Bundle Size
+- You can filter the cards based on their status. The status options are: Full, Want to Learn, Noted, and Learned. By default, full, meaning that all cards are displayed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- By clicking on the Create Card button, you can access the interface for adding new cards. After the click, you simply have to enter the question and answer details, then press the Save Card button.
 
-### Making a Progressive Web App
+- To change the status of the card, you simply have to flip the card and click on the change status button. First click will update the status to Noted; second click will update it to Learned.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Utilizing the checkboxes on the corner of cards, you can select them and with the help of appeared share button, you can send the json format of those cards over the email.
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- In contact me page, you can write about any desired topic to me.

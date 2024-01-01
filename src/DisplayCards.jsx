@@ -6,13 +6,14 @@ import "./style/DisplayCards.css";
 
 const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
   const [flashCards, setLocalFlashCards] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("Full");
-  const [sortAttribute, setSortAttribute] = useState("modificationDate");
-  const [isAddCardFormVisible, setIsAddCardFormVisible] = useState(false);
+  const [createCardVisibility, setCreateCardVisibility] = useState(false);
+  const [searchInfo, setSearchInfo] = useState("");
+  const [setFilterInfo, setsetFilterInfo] = useState("Full");
+  const [sortInfo, setSortInfo] = useState("modificationDate");
   const [selectedCards, setSelectedCards] = useState([]);
+  const [fetchMore, setFetchMore] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const today = new Date().toISOString().split("T")[0];
 
   const pageRef = useRef(1);
 
@@ -64,17 +65,20 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
     const scrollHeight = document.documentElement.scrollHeight;
 
     if (scrollTop + windowHeight >= scrollHeight - 50 && !loading) {
-      fetchMoreFlashCards();
+      fetchMoreCards();
     }
   };
 
-  const fetchMoreFlashCards = useCallback(async () => {
+  const fetchMoreCards = useCallback(async () => {
     setLoading(true);
     try {
       const nextPage = pageRef.current + 1;
       await new Promise((resolve) => setTimeout(resolve, 675));
       const data = await fetchCards(`_page=${nextPage}&_limit=12`);
-      const updatedData = updateDataWithOrder(data, flashCards);
+      const updatedData = data.map((card, idx) => ({
+        ...card,
+        order: flashCards.length + idx + 1,
+      }));
 
       setLocalFlashCards((prevFlashCards) => [
         ...prevFlashCards,
@@ -82,22 +86,12 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
       ]);
       pageRef.current = nextPage;
     } catch (error) {
-      console.error("Error fetching more flash cards:", error);
+      console.error("Error occurred while fetching more flash cards:", error);
     } finally {
       setLoading(false);
     }
   }, [flashCards]);
 
-  const updateDataWithOrder = (data, prevFlashCards) => {
-    const maxOrder =
-      prevFlashCards.length > 0
-        ? prevFlashCards[prevFlashCards.length - 1].order
-        : 0;
-    return data.map((card, index) => ({
-      ...card,
-      order: maxOrder + index + 1,
-    }));
-  };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -105,32 +99,35 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
     };
   }, [handleScroll]);
 
-  const handleAddCard = (newCard) => {
-    fetchCards("_sort=modificationDate&_order=desc&_limit=1")
-      .then(([latestCard]) => {
-        const nextId = latestCard ? latestCard.id + 1 : 1;
-
-        return fetch("http://localhost:3000/cardData", {
+  const createCardHandler = (createdCard) => {
+    fetch("http://localhost:3000/cardData?_sort=id&_order=desc&_limit=1")
+      .then((response) => response.json())
+      .then(([recent]) => {
+        const nextId = recent ? recent.id + 1 : 1;
+        fetch("http://localhost:3000/cardData", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            question: newCard.question,
-            answer: newCard.answer,
+            question: createdCard.question,
+            answer: createdCard.answer,
             status: "Want to Learn",
-            modificationDate: new Date().toISOString().split("T")[0],
+            modificationDate: today,
             order: nextId,
           }),
-        });
-      })
-      .then((response) => response.json())
-      .then((addedCard) => {
-        setLocalFlashCards([addedCard, ...flashCards]);
-        setIsAddCardFormVisible(false);
+        })
+          .then((res) => res.json())
+          .then((createdCard) => {
+            setLocalFlashCards([...flashCards, createdCard]);
+            setCreateCardVisibility(false);
+          })
+          .catch((error) => {
+            console.error("Error adding card:", error);
+          });
       })
       .catch((error) => {
-        console.error("Error adding card:", error);
+        console.error("Error fetching latest card:", error);
       });
   };
 
@@ -169,8 +166,8 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
     return (
       <div className="create-card-form">
         <NewCardComponent
-          onCreateCardAction={handleAddCard}
-          onCancelAction={() => setIsAddCardFormVisible(false)}
+          onCreateCardAction={createCardHandler}
+          onCancelAction={() => setCreateCardVisibility(false)}
         />
       </div>
     );
@@ -212,25 +209,25 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
       const answerText = String(card.answer);
 
       return (
-        questionText.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        answerText.toLowerCase().includes(searchTerm.toLowerCase())
+        questionText.toLowerCase().includes(searchInfo.toLowerCase()) ||
+        answerText.toLowerCase().includes(searchInfo.toLowerCase())
       );
     })
     .filter((card) => {
       const cardStatus = card.status ? card.status : "unknown";
       return (
-        filterStatus === "Full" ||
-        (cardStatus && cardStatus.toLowerCase() === filterStatus.toLowerCase())
+        setFilterInfo === "Full" ||
+        (cardStatus && cardStatus.toLowerCase() === setFilterInfo.toLowerCase())
       );
     })
     .sort((a, b) => {
-      if (sortAttribute === "id") {
+      if (sortInfo === "id") {
         return a.id - b.id;
-      } else if (sortAttribute === "question") {
+      } else if (sortInfo === "question") {
         return a.question.localeCompare(b.question);
-      } else if (sortAttribute === "answer") {
+      } else if (sortInfo === "answer") {
         return a.answer.localeCompare(b.answer);
-      } else if (sortAttribute === "Modification Date") {
+      } else if (sortInfo === "Modification Date") {
         return new Date(b.modificationDate) - new Date(a.modificationDate);
       }
       return 0;
@@ -242,13 +239,13 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
         <input
           type="text"
           placeholder="Search cards..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={searchInfo}
+          onChange={(e) => setSearchInfo(e.target.value)}
           className="search-filter-sort"
         />
         <select
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
+          value={setFilterInfo}
+          onChange={(e) => setsetFilterInfo(e.target.value)}
           className="select-box"
         >
           <option value="Full">Full</option>
@@ -257,22 +254,22 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
           <option value="Learned">Learned</option>
         </select>
         <select
-          value={sortAttribute}
-          onChange={(e) => setSortAttribute(e.target.value)}
+          value={sortInfo}
+          onChange={(e) => setSortInfo(e.target.value)}
           className="select-box"
         >
           <option value="id">ID</option>
-          <option value="question">Front</option>
+          <option value="question">Question</option>
           <option value="answer">Answer</option>
-          <option value="modificationDate">Last Modified</option>
+          <option value="modificationDate">Modification Date</option>
         </select>
         <button
           className={`btn create-card-btn ${
             selectedCards.length > 0 ? "selected-card" : ""
           }`}
-          onClick={() => setIsAddCardFormVisible(true)}
+          onClick={() => setCreateCardVisibility(true)}
         >
-          Add Card
+          Create Card
         </button>
 
         <button
@@ -286,12 +283,12 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
         </button>
       </div>
 
-      {isAddCardFormVisible && renderAddCardForm()}
+      {createCardVisibility && renderAddCardForm()}
 
       {renderFlashcards(fetchFlashCards)}
 
       <h1 className="loading-text">
-        {loading && !isFetchingMore && <div>Loading...</div>}
+        {loading && !fetchMore && <div>Loading...</div>}
       </h1>
     </div>
   );
