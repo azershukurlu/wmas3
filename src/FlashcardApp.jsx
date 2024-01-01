@@ -19,6 +19,7 @@ const updateMethod = async (
           question,
           answer,
           order,
+          modificationDate: currentDate,
         };
       }
       return card;
@@ -33,6 +34,7 @@ const updateMethod = async (
         question,
         answer,
         order,
+        modificationDate: currentDate,
       }),
     });
 
@@ -41,7 +43,6 @@ const updateMethod = async (
     console.error("Encountered error while updating card:", error);
   }
 };
-
 const FlashcardApp = ({
   flashCard,
   onDelete,
@@ -198,7 +199,6 @@ const FlashcardApp = ({
 
   function dragHandlerOver(event) {
     event.preventDefault();
-    event.target.style.background = "lightgray";
   }
 
   const dropHandler = (event, target) => {
@@ -211,10 +211,18 @@ const FlashcardApp = ({
     if (draggedID && target) {
       const updatedCards = flashCards.map((flashcard) => {
         if (flashcard.id === target.id) {
-          return { ...flashcard, order: draggedOrder };
+          return {
+            ...flashcard,
+            order: draggedOrder,
+            modificationDate: currentDate,
+          };
         }
         if (flashcard.id === draggedID) {
-          return { ...flashcard, order: target.order };
+          return {
+            ...flashcard,
+            order: target.order,
+            modificationDate: currentDate,
+          };
         }
         return flashcard;
       });
@@ -229,6 +237,7 @@ const FlashcardApp = ({
           },
           body: JSON.stringify({
             order: flash.order,
+            modificationDate: flash.modificationDate,
           }),
         })
       );
@@ -249,6 +258,58 @@ const FlashcardApp = ({
     }
     event.target.style.background = "white";
   };
+
+  const renderEditMode = () => (
+    <>
+      <input
+        type="text"
+        value={editedQuestion}
+        onChange={changeHandlerQuestion}
+        onClick={(event) => event.stopPropagation()}
+      />
+      <input
+        type="text"
+        value={editedAnswer}
+        onChange={changeHandlerAnswer}
+        onClick={(event) => event.stopPropagation()}
+      />
+      <button onClick={(event) => updateEvent(event)}>Update</button>
+    </>
+  );
+
+  const renderViewMode = () => (
+    <>
+      {!flip && (
+        <div className="check-box" onClick={(event) => event.stopPropagation()}>
+          <input
+            type="checkbox"
+            checked={selectedCards.includes(flashCard.id)}
+            onChange={() => {}}
+            onClick={() => checkboxHandler(flashCard.id)}
+          />
+        </div>
+      )}
+      <div className="question" ref={questionElement}>
+        {editedQuestion}
+      </div>
+      <div className="answer" ref={answerElement}>
+        <div className={flip ? "rotated" : ""}></div>
+        {editedAnswer}
+        {flip && status !== "Learned" && (
+          <button className="update-status" onClick={statusHandler}>
+            Change Status
+          </button>
+        )}
+      </div>
+      {height === "auto" && (
+        <div className="actions">
+          <button onClick={deleteEvent}>Delete</button>
+          <button onClick={editEvent}>Edit</button>
+        </div>
+      )}
+      <div className={`status-location ${flip ? "rotated" : ""}`}>{status}</div>
+    </>
+  );
 
   return (
     <div
@@ -275,60 +336,7 @@ const FlashcardApp = ({
       }}
       draggable={true}
     >
-      {currMode ? (
-        <>
-          <input
-            type="text"
-            value={editedQuestion}
-            onChange={changeHandlerQuestion}
-            onClick={(event) => event.stopPropagation()}
-          />
-          <input
-            type="text"
-            value={editedAnswer}
-            onChange={changeHandlerAnswer}
-            onClick={(event) => event.stopPropagation()}
-          />
-          <button onClick={(event) => updateEvent(event)}>Update</button>
-        </>
-      ) : (
-        <>
-          {!flip && (
-            <div
-              className="check-box"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <input
-                type="checkbox"
-                checked={selectedCards.includes(flashCard.id)}
-                onChange={() => {}}
-                onClick={() => checkboxHandler(flashCard.id)}
-              />
-            </div>
-          )}
-          <div className="question" ref={questionElement}>
-            {editedQuestion}
-          </div>
-          <div className="answer" ref={answerElement}>
-            <div className={flip ? "rotated" : ""}></div>
-            {editedAnswer}
-            {flip && status !== "Learned" && (
-              <button className="update-status" onClick={statusHandler}>
-                Change Status
-              </button>
-            )}
-          </div>
-          {height === "auto" && (
-            <div className="actions">
-              <button onClick={deleteEvent}>Delete</button>
-              <button onClick={editEvent}>Edit</button>
-            </div>
-          )}
-          <div className={`status-location ${flip ? "rotated" : ""}`}>
-            {status}
-          </div>
-        </>
-      )}
+      {currMode ? renderEditMode() : renderViewMode()}
     </div>
   );
 };

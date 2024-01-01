@@ -1,14 +1,24 @@
 import React from "react";
+import "./style/MyProjects.css";
 
 function MyProjects({ projectName, projectDescription, projectLink }) {
-  const clickEventHandler = () => {
-    window.open(projectLink, "_blank");
-  };
-
   return (
-    <li className="projects-container" onClick={clickEventHandler}>
-      <b className="list-projects">{projectName}:</b> {projectDescription}
-    </li>
+    <div className="project-card">
+      <div className="project-header">
+        <h3 className="project-name">{projectName}</h3>
+      </div>
+      <div className="project-details">
+        <p className="project-description">{projectDescription}</p>
+        <a
+          className="project-link"
+          href={projectLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Project
+        </a>
+      </div>
+    </div>
   );
 }
 

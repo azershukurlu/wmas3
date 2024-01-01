@@ -106,9 +106,10 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
   }, [handleScroll]);
 
   const handleAddCard = (newCard) => {
-    fetchCards("_sort=id&_order=desc&_limit=1")
+    fetchCards("_sort=modificationDate&_order=desc&_limit=1")
       .then(([latestCard]) => {
         const nextId = latestCard ? latestCard.id + 1 : 1;
+
         return fetch("http://localhost:3000/cardData", {
           method: "POST",
           headers: {
@@ -125,7 +126,7 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
       })
       .then((response) => response.json())
       .then((addedCard) => {
-        setLocalFlashCards([...flashCards, addedCard]);
+        setLocalFlashCards([addedCard, ...flashCards]);
         setIsAddCardFormVisible(false);
       })
       .catch((error) => {
@@ -168,8 +169,8 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
     return (
       <div className="create-card-form">
         <NewCardComponent
-          onAddCard={handleAddCard}
-          onCancel={() => setIsAddCardFormVisible(false)}
+          onCreateCardAction={handleAddCard}
+          onCancelAction={() => setIsAddCardFormVisible(false)}
         />
       </div>
     );

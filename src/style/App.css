@@ -23,7 +23,7 @@ body {
 }
 
 nav {
-  background-color: #333;
+  background-color: #282c35;
   padding: 16px;
   position: fixed;
   top: 0;
@@ -61,37 +61,7 @@ nav a:hover {
 .main-container {
   background-color: #fff;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+  box-shadow: 4px 8px 40px rgba(0, 0, 0, 0.35);
   text-align: center;
-  margin-top: 100px;
-}
-
-.project-container {
-  list-style: none;
-  padding: 0;
-}
-
-.projects-container {
-  cursor: pointer;
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid #eee;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.35s ease, background-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.projects-container:hover {
-  background-color: #f9f9f9;
-  transform: scale(1.03);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.list-projects {
-  color: #007bff;
-  transition: color 0.3s;
-}
-
-.list-projects:hover {
-  color: #0056b3;
+  margin-top: 80px;
 }

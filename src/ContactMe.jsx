@@ -32,7 +32,7 @@ const ContactMe = () => {
       });
 
       if (response.ok) {
-        alert("Message is sent!");
+        alert("Message sent successfully!");
       } else {
         alert("Error occurred while submitting the message. Please try again!");
         console.error("An error occurred while submitting the message.");
@@ -45,37 +45,43 @@ const ContactMe = () => {
 
   return (
     <div className="contact-form-container">
-      <h2>Contact Me</h2>
+      <div className="form-header">
+        <h2>Let's Connect</h2>
+        <p>Feel free to drop me a message below.</p>
+      </div>
       <form onSubmit={handleFormSubmit} className="custom-contact-form">
-        <label>
-          Subject:
+        <div className="form-group">
+          <label htmlFor="subject">Subject:</label>
           <input
             type="text"
+            id="subject"
             name="subject"
             value={userMessage.subject}
             onChange={handleInputChange}
+            required
           />
-        </label>
-        <br />
-        <label>
-          Email:
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Email:</label>
           <input
             type="email"
+            id="email"
             name="email"
             value={userMessage.email}
             onChange={handleInputChange}
+            required
           />
-        </label>
-        <br />
-        <label>
-          Message:
+        </div>
+        <div className="form-group">
+          <label htmlFor="content">Your Message:</label>
           <textarea
+            id="content"
             name="content"
             value={userMessage.content}
             onChange={handleInputChange}
+            required
           />
-        </label>
-        <br />
+        </div>
         <button type="submit" className="submit-message-button">
           Send Message
         </button>
