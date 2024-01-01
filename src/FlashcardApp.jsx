@@ -62,12 +62,11 @@ const updateMethod = async (
 const FlashcardApp = ({
   flashCard,
   onDelete,
-  onUpdate,
   flashCards,
   setFlashCards,
   selectedCards,
   setSelectedCards,
-  fetchFlashCards,
+  allowDrag,
 }) => {
   const questionElement = useRef();
   const answerElement = useRef();
@@ -228,13 +227,11 @@ const FlashcardApp = ({
       const draggedUpdated = {
         ...flashCards.find((card) => card.id === draggedID),
         order: target.order,
-        modificationDate: currentDate,
       };
 
       const targetUpdated = {
         ...flashCards.find((card) => card.id === target.id),
         order: draggedOrder,
-        modificationDate: currentDate,
       };
 
       const updatedCards = flashCards.map((card) => {
@@ -247,8 +244,6 @@ const FlashcardApp = ({
         return card;
       });
 
-      setFlashCards(updatedCards);
-
       const promiseOrder = updatedCards.map((card) =>
         fetch(`http://localhost:3000/cardData/${card.id}`, {
           method: "PATCH",
@@ -257,7 +252,6 @@ const FlashcardApp = ({
           },
           body: JSON.stringify({
             order: card.order,
-            modificationDate: card.modificationDate,
           }),
         })
       );
@@ -357,7 +351,7 @@ const FlashcardApp = ({
       onDrop={(event) => {
         dropHandler(event, flashCard);
       }}
-      draggable={true}
+      draggable={allowDrag}
     >
       {currMode ? renderEditMode() : renderViewMode()}
     </div>

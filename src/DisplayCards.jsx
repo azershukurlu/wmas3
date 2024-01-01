@@ -8,7 +8,7 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
   const [flashCards, setLocalFlashCards] = useState([]);
   const [createCardVisibility, setCreateCardVisibility] = useState(false);
   const [searchInfo, setSearchInfo] = useState("");
-  const [setFilterInfo, setsetFilterInfo] = useState("Full");
+  const [filterInfo, setFilterInfo] = useState("Full");
   const [sortInfo, setSortInfo] = useState("modificationDate");
   const [selectedCards, setSelectedCards] = useState([]);
   const [fetchMore, setFetchMore] = useState(false);
@@ -30,7 +30,7 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
     setLoading(true);
     try {
       const existingData = await fetchCards(
-        `_sort=${sortInfo}&_order=asc&_page=1&_limit=12`
+        `_sort=${sortInfo}&_order=desc&_page=1&_limit=12`
       );
       const lastAddedData = await fetchCards(
         "_page=1&_limit=1&_sort=modificationDate&_order=desc"
@@ -248,8 +248,8 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
     .filter((card) => {
       const cardStatus = card.status ? card.status : "unknown";
       return (
-        setFilterInfo === "Full" ||
-        (cardStatus && cardStatus.toLowerCase() === setFilterInfo.toLowerCase())
+        filterInfo === "Full" ||
+        (cardStatus && cardStatus.toLowerCase() === filterInfo.toLowerCase())
       );
     })
     .sort((a, b) => {
@@ -274,12 +274,12 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
           type="text"
           placeholder="Search cards..."
           value={searchInfo}
-          onChange={(e) => setSearchInfo(e.target.value)}
+          onChange={(event) => setSearchInfo(event.target.value)}
           className="search-filter-sort"
         />
         <select
-          value={setFilterInfo}
-          onChange={(e) => setsetFilterInfo(e.target.value)}
+          value={filterInfo}
+          onChange={(event) => setFilterInfo(event.target.value)}
           className="select-box"
         >
           <option value="Full">Full</option>
@@ -287,11 +287,7 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
           <option value="Noted">Noted</option>
           <option value="Learned">Learned</option>
         </select>
-        <select
-          value={sortInfo}
-          onChange={(e) => setSortInfo(e.target.value)}
-          className="select-box"
-        >
+        <select value={sortInfo} onChange={sortHandler} className="select-box">
           <option value="id">ID</option>
           <option value="question">Question</option>
           <option value="answer">Answer</option>
@@ -320,7 +316,7 @@ const DisplayCards = ({ onDelete, setFlashCards: setFlashCards }) => {
 
       {createCardVisibility && renderAddCardForm()}
 
-      {renderFlashcards(fetchFlashCards)}
+      {renderFlashcards()}
 
       <h1 className="loading-text">
         {loading && !fetchMore && <div>Loading...</div>}

@@ -48,12 +48,28 @@ const FlashCardContainer = () => {
       });
   }
 
+  const handleCardUpdate = (updatedCard) => {
+    const cardIndex = flashCards.findIndex(
+      (card) => card.id === updatedCard.id
+    );
+
+    if (cardIndex !== -1) {
+      const updatedFlashCards = [...flashCards];
+      updatedFlashCards[cardIndex] = {
+        ...updatedCard,
+        lastModified: flashCards[cardIndex].lastModified,
+      };
+
+      setFlashCards(updatedFlashCards);
+    }
+  };
+
   return (
     <div className="container">
       <DisplayCards
         flashCards={flashCards}
         onDelete={deleteHandler}
-        setFlashCards={setFlashCards}
+        setFlashCards={{ handleCardUpdate }}
       />
     </div>
   );
