@@ -31,7 +31,7 @@ Make sure you have Node.js and npm installed on your machine.
 
 4. Start JSON-Server:
 
-- install json-server
+- npm run json-server
 
 5. In a new terminal window, start the React app:
 
@@ -43,7 +43,7 @@ Make sure you have Node.js and npm installed on your machine.
 
 - The flashcards are fetched from the JSON-Server, and you can use the application to create, edit, and delete flashcards.
 
-- You can re-order the flashcards by dragging any desirable card and dropping it to any other card.
+- You can re-order the flashcards by dragging any desirable card and dropping it to any other card. Drag and drop feature can only be used when sorting is set for "Order". After re-ordering the cards through drag and drop, the page will render, and then you have to apply the sorting for order to retrieve the recently ordered data.
 
 - You can sort the cards based on their IDs, question, answer, and modification date (this is default sort).
 
